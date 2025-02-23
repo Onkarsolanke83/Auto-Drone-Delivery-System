@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drone Delivery System</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        input {
+            padding: 10px;
+            margin: 10px;
+            width: 200px;
+        }
+
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+
+        p {
+            color: green;
+            margin-top: 10px;
+        }
+
+        #drones-list, #employees-list {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Drone Delivery System</h1>
+        <div id="main-menu">
+            <button onclick="showAdminLogin()">Admin Login</button>
+            <button onclick="showEmployeeLogin()">Employee Login</button>
+        </div>
+
+        <!-- Admin Login -->
+        <div id="admin-login" class="hidden">
+            <h2>Admin Login</h2>
+            <input type="text" id="admin-id" placeholder="Admin ID" />
+            <input type="password" id="admin-password" placeholder="Password" />
+            <button onclick="adminLogin()">Login</button>
+            <p id="admin-login-error" class="error"></p>
+        </div>
+
+        <!-- Employee Login -->
+        <div id="employee-login" class="hidden">
+            <h2>Employee Login</h2>
+            <input type="text" id="employee-id" placeholder="Employee ID" />
+            <input type="password" id="employee-password" placeholder="Password" />
+            <button onclick="employeeLogin()">Login</button>
+            <p id="employee-login-error" class="error"></p>
+        </div>
+
+        <!-- Admin Menu -->
+        <div id="admin-menu" class="hidden">
+            <h2>Admin Menu</h2>
+            <button onclick="displayDrones()">Display Drones</button>
+            <button onclick="showAddDrone()">Add Drone</button>
+            <button onclick="showRemoveDrone()">Remove Drone</button>
+            <button onclick="displayEmployees()">View Employees</button>
+            <button onclick="logout()">Logout</button>
+
+            <!-- Add Drone Form -->
+            <div id="add-drone" class="hidden">
+                <input type="text" id="drone-name" placeholder="Drone Name" />
+                <button onclick="addDrone()">Add Drone</button>
+                <p id="drone-added-message"></p>
+            </div>
+
+            <!-- Remove Drone Form -->
+            <div id="remove-drone" class="hidden">
+                <input type="number" id="drone-id" placeholder="Drone ID" />
+                <button onclick="removeDrone()">Remove Drone</button>
+                <p id="drone-removed-message"></p>
+            </div>
+
+            <!-- Drones Display -->
+            <div id="drones-list" class="hidden"></div>
+            <!-- Employees Display -->
+            <div id="employees-list" class="hidden"></div>
+        </div>
+
+        <!-- Employee Menu -->
+        <div id="employee-menu" class="hidden">
+            <h2>Employee Menu</h2>
+            <input type="number" id="delivery-from" placeholder="From Location" />
+            <input type="number" id="delivery-to" placeholder="To Location" />
+            <button onclick="sendDrone()">Send Drone for Delivery</button>
+            <p id="delivery-message"></p>
+            <button onclick="logout()">Logout</button>
+        </div>
+    </div>
+
+    <script>
+        let drones = [
+            { id: 1, name: "Drone_1", battery: 100, status: "Available" },
+            { id: 2, name: "Drone_2", battery: 100, status: "Available" },
+        ];
+
+        let employees = [
+            { id: "emp1", password: "pass1", name: "Employee_1" },
+            { id: "emp2", password: "pass2", name: "Employee_2" },
+            { id: "emp3", password: "pass3", name: "Employee_3" },
+        ];
+
+        function showAdminLogin() {
+            hideAll();
+            document.getElementById('admin-login').classList.remove('hidden');
+        }
+
+        function showEmployeeLogin() {
+            hideAll();
+            document.getElementById('employee-login').classList.remove('hidden');
+        }
+
+        function hideAll() {
+            const sections = document.querySelectorAll('.hidden');
+            sections.forEach(section => section.classList.add('hidden'));
+        }
+
+        function adminLogin() {
+            const adminId = document.getElementById('admin-id').value;
+            const adminPassword = document.getElementById('admin-password').value;
+
+            if (adminId === "Admin" && adminPassword === "DSA@123") {
+                hideAll();
+                document.getElementById('admin-menu').classList.remove('hidden');
+            } else {
+                document.getElementById('admin-login-error').textContent = "Invalid Admin Credentials!";
+            }
+        }
+
+        function employeeLogin() {
+            const employeeId = document.getElementById('employee-id').value;
+            const employeePassword = document.getElementById('employee-password').value;
+
+            const employee = employees.find(e => e.id === employeeId && e.password === employeePassword);
+            if (employee) {
+                hideAll();
+                document.getElementById('employee-menu').classList.remove('hidden');
+            } else {
+                document.getElementById('employee-login-error').textContent = "Invalid Employee Credentials!";
+            }
+        }
+
+        function displayDrones() {
+            const droneList = document.getElementById('drones-list');
+            droneList.classList.remove('hidden');
+            droneList.innerHTML = "<h3>Drones List</h3>";
+            drones.forEach(drone => {
+                droneList.innerHTML += <p>${drone.name} - Battery: ${drone.battery}, Status: ${drone.status}</p>;
+            });
+        }
+
+        function showAddDrone() {
+            hideAll();
+            document.getElementById('add-drone').classList.remove('hidden');
+        }
+
+        function showRemoveDrone() {
+            hideAll();
+            document.getElementById('remove-drone').classList.remove('hidden');
+        }
+
+        function addDrone() {
+            const droneName = document.getElementById('drone-name').value;
+            const newDrone = {
+                id: drones.length + 1,
+                name: droneName,
+                battery: 100,
+                status: "Available",
+            };
+            drones.push(newDrone);
+            document.getElementById('drone-added-message').textContent = Drone ${droneName} added successfully!;
+        }
+
+        function removeDrone() {
+            const droneId = parseInt(document.getElementById('drone-id').value);
+            drones = drones.filter(drone => drone.id !== droneId);
+            document.getElementById('drone-removed-message').textContent = Drone ID ${droneId} removed!;
+        }
+
+        function displayEmployees() {
+            const employeeList = document.getElementById('employees-list');
+            employeeList.classList.remove('hidden');
+            employeeList.innerHTML = "<h3>Employees List</h3>";
+            employees.forEach(emp => {
+                employeeList.innerHTML += <p>${emp.name}</p>;
+            });
+        }
+
+        function sendDrone() {
+            const from = parseInt(document.getElementById('delivery-from').value);
+            const to = parseInt(document.getElementById('delivery-to').value);
+            document.getElementById('delivery-message').textContent = Drone dispatched from ${from} to ${to};
+        }
+
+        function logout() {
+            hideAll();
+            document.getElementById('main-menu').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
