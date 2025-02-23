@@ -13,8 +13,6 @@ The **Automated Drone Delivery System** is an intelligent logistics solution tha
 ## 🛠️ Technologies Used
 - **Backend:** C++
 - **Frontend:** HTML, CSS, JavaScript
-- **Database:** (Specify if used)
-- **Other Tools:** (Specify any APIs, frameworks, or libraries)
 
 ## 📌 Installation & Setup
 1. Clone the repository:
@@ -39,8 +37,6 @@ The **Automated Drone Delivery System** is an intelligent logistics solution tha
    open index.html
    ```
 
-## 📷 Screenshots
-(Add relevant images or GIFs showcasing the system)
 
 ## 🔗 Future Enhancements
 - AI-based route optimization
@@ -48,7 +44,7 @@ The **Automated Drone Delivery System** is an intelligent logistics solution tha
 - Mobile application support
 
 ## 🤝 Contributors
-- **Your Name** – [LinkedIn](https://linkedin.com/in/yourprofile)
+- **Onkar Solanke** – [LinkedIn](https://www.linkedin.com/in/onkar-solanke-3369a7208/)
 
 ## 📜 License
 This project is licensed under the MIT License.
