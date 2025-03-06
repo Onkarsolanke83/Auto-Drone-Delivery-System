@@ -46,5 +46,4 @@ The **Automated Drone Delivery System** is an intelligent logistics solution tha
 ## 🤝 Contributors
 - **Onkar Solanke** – [LinkedIn](https://www.linkedin.com/in/onkar-solanke-3369a7208/)
 
-## 📜 License
-This project is licensed under the MIT License.
+
